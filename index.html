@@ -11,7 +11,10 @@ inspector.__VERSION__ = "YOUR-APP-VERSION";
 // inspector.__APP_NAME__ = "YOUR-APP-NAME"; // Optional
 
 inspector.load();
-   inspector.trackSchemaFromEvent("newSession", {"pageName": "HomePage"});
+   inspector.trackSchemaFromEvent("Event Name1", {"String property": "some string",
+    "Boolean property": true,
+    "Integer property": 10
+});
 </script>
       <!-- basic -->
       <meta charset="utf-8">
