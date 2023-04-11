@@ -2,10 +2,16 @@
 <html lang="en">
    <head>
 <script>
-  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments);t.unshift(e);analytics.push(t);return analytics}};for(var e=0;e<analytics.methods.length;e++){var key=analytics.methods[e];analytics[key]=analytics.factory(key)}analytics.load=function(key,e){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n);analytics._loadOptions=e};analytics._writeKey="Ymha5gGNFqq2SnouViI06XkqRNq0hI8K";;analytics.SNIPPET_VERSION="4.15.3";
-  analytics.load("Ymha5gGNFqq2SnouViI06XkqRNq0hI8K");
-  analytics.page();
-  }}();
+!function(){var t=window.inspector=window.inspector||[];t.methods=["trackSchemaFromEvent","trackSchema","setBatchSize","setBatchFlushSeconds"],t.factory=function(e){return function(){var r=Array.prototype.slice.call(arguments);return r.unshift(e),t.push(r),t}};for(var e=0;e<t.methods.length;e++){var r=t.methods[e];t[r]=t.factory(r)}t.load=function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://cdn.avo.app/inspector/inspector-v1.min.js";var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e)},t._scriptVersion=1}();
+
+// Update the following variables to match your project
+inspector.__API_KEY__ = "rXkvbko8vIKa63WGmjK6";
+inspector.__ENV__ = "dev"; // or "prod"
+inspector.__VERSION__ = "YOUR-APP-VERSION";
+// inspector.__APP_NAME__ = "YOUR-APP-NAME"; // Optional
+
+inspector.load();
+   inspector.trackSchemaFromEvent("New_session", {"pageName": "Homw page"});
 </script>
       <!-- basic -->
       <meta charset="utf-8">
