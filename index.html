@@ -44,13 +44,15 @@
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
+            overflow-y: auto;
+            /* Updated property to allow vertical overflow */
             width: 800px;
             max-width: 90%;
             margin-top: 20px;
             padding: 20px;
             position: relative;
         }
+
 
         #chat-history {
             max-height: 300px;
@@ -123,7 +125,7 @@
 </head>
 
 <body>
-     <h1>Pragyan 😎</h1>
+    <h1>Pragyan 😎</h1>
     <h2>Virtual assistant By Bishnu Haldar 🚀</h2>
     <div id="chat-container">
         <div id="chat-history"></div>
