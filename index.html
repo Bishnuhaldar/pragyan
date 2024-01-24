@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pragyan😎</title>
     <title>Chatbot By Bishnu Haldar 🚀</title>
     <style>
         body {
@@ -24,9 +25,11 @@
             0% {
                 background-position: 0% 50%;
             }
+
             50% {
                 background-position: 100% 50%;
             }
+
             100% {
                 background-position: 0% 50%;
             }
@@ -104,6 +107,7 @@
             cursor: pointer;
             margin-top: 10px;
         }
+
         /* (existing styles) */
 
         #start-voice-input {
@@ -119,7 +123,7 @@
 </head>
 
 <body>
-    <h1>Virtual Assistant  By Bishnu Haldar 🙇🏻</h1>
+    <h1>Chatbot By Bishnu Haldar 🚀</h1>
     <div id="chat-container">
         <div id="chat-history"></div>
         <div id="user-input-container">
@@ -162,12 +166,16 @@
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             const result = await model.generateContent(prompt);
             const response = await result.response;
-            const text = response.text();
+            let text = response.text();
+
+            // Handle bold formatting
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\*(.*?)\*/g, '&ast;$1&ast;');
 
             const chatHistory = document.getElementById("chat-history");
             const messageContainer = document.createElement("div");
             messageContainer.className = "message bot-response";
-            messageContainer.textContent = text;
+            messageContainer.innerHTML = text; // Use innerHTML to render HTML tags
 
             chatHistory.appendChild(messageContainer);
             chatHistory.scrollTop = chatHistory.scrollHeight;
@@ -197,9 +205,11 @@
         }
 
         function speak(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            window.speechSynthesis.speak(utterance);
-            isSpeaking = true;
+            if (!isSpeaking) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                window.speechSynthesis.speak(utterance);
+                isSpeaking = true;
+            }
         }
 
         document.getElementById("send-button").addEventListener("click", handleSendMessage);
@@ -208,6 +218,9 @@
             if (event.key === "Enter") {
                 event.preventDefault();
                 handleSendMessage();
+            } else {
+                // Disable text-to-speech during user input
+                stopSpeech();
             }
         });
 
@@ -220,6 +233,8 @@
         });
 
         document.getElementById("start-voice-input").addEventListener("click", () => {
+            // You might want to add additional logic here, if needed.
+            // For example, checking if recognition is supported by the browser.
             recognition.start();
         });
 
