@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pragyan😎</title>
     <title>Chatbot By Bishnu Haldar 🚀</title>
     <style>
         body {
@@ -24,9 +25,11 @@
             0% {
                 background-position: 0% 50%;
             }
+
             50% {
                 background-position: 100% 50%;
             }
+
             100% {
                 background-position: 0% 50%;
             }
@@ -104,107 +107,19 @@
             cursor: pointer;
             margin-top: 10px;
         }
+
         /* (existing styles) */
 
-        
-      
-    .btn {
-      border: none;
-      padding: 0;
-      border-radius: 50%;
-      width: 60px; /* Adjusted based on $size */
-      height: 60px; /* Adjusted based on $size */
-      font-size: 3em;
-      color: #fff;
-      margin: 0;
-      background: #189BFF; /* Replaced with the initial color value */
-      position: relative;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      cursor: pointer;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      background-image: none;
-    }
-
-    #start-voice-input {
-        padding: 10px;
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-       
-        cursor: pointer;
-        margin-top: 10px;
-    }
-
-    .pulse-ring {
-      content: '';
-      width: 60px; /* Adjusted based on $size */
-      height: 60px; /* Adjusted based on $size */
-      background: #189BFF; /* Replaced with the initial color value */
-      border: 5px solid #189BFF; /* Replaced with the initial color value */
-      border-radius: 50%;
-      position: absolute;
-      top: -5px;
-      left: -5px;
-      animation: pulsate 0s infinite; /* Initially set to 0s */
-    }
-
-    @-webkit-keyframes pulsate {
-      0% {
-        -webkit-transform: scale(1, 1);
-        opacity: 1;
-      }
-      100% {
-        -webkit-transform: scale(1.3, 1.3);
-        opacity: 0;
-      }
-    }
-
-    .container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: green; /* Replaced with the actual color value */
-    }
-
-    .type2 {
-      background: red; /* Replaced with the active color value */
-    }
-
-    .type2 .pulse-ring {
-      background: transparent;
-    }
-
-    .mic-icon {
-      max-width: 40%;
-      max-height: 40%;
-    }
-    </style>
-    <script>
-        let isAnimating = false;
-    
-        function toggleAnimation() {
-          isAnimating = !isAnimating;
-    
-          const btn = document.getElementById('start-voice-input');
-          const pulseRing = btn.querySelector('.pulse-ring');
-    
-          if (isAnimating) {
-            pulseRing.style.animation = 'pulsate infinite 1.5s';
-            btn.classList.add('type2');
-          } else {
-            pulseRing.style.animation = 'pulsate 0s infinite'; // Set to 0s to stop animation
-            btn.classList.remove('type2');
-          }
+        #start-voice-input {
+            padding: 10px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
         }
-      </script>
+    </style>
 </head>
 
 <body>
@@ -218,10 +133,7 @@
     </div>
     <audio id="message-tone" src="Short Message Beep.mp3" preload="auto"></audio>
     <button id="stop-speech-button">Stop Speech</button>
-    <button id="start-voice-input" class="btn" onclick="toggleAnimation()">
-        <div class="pulse-ring"></div>
-        <img src="mic_icon.png" alt="Microphone Icon" class="mic-icon">
-      </button>
+    <button id="start-voice-input">Start Voice Input</button>
 
     <script type="module">
         import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
@@ -254,12 +166,16 @@
             const model = genAI.getGenerativeModel({ model: "gemini-pro" });
             const result = await model.generateContent(prompt);
             const response = await result.response;
-            const text = response.text();
+            let text = response.text();
+
+            // Handle bold formatting
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\*(.*?)\*/g, '&ast;$1&ast;');
 
             const chatHistory = document.getElementById("chat-history");
             const messageContainer = document.createElement("div");
             messageContainer.className = "message bot-response";
-            messageContainer.textContent = text;
+            messageContainer.innerHTML = text; // Use innerHTML to render HTML tags
 
             chatHistory.appendChild(messageContainer);
             chatHistory.scrollTop = chatHistory.scrollHeight;
@@ -289,9 +205,11 @@
         }
 
         function speak(text) {
-            const utterance = new SpeechSynthesisUtterance(text);
-            window.speechSynthesis.speak(utterance);
-            isSpeaking = true;
+            if (!isSpeaking) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                window.speechSynthesis.speak(utterance);
+                isSpeaking = true;
+            }
         }
 
         document.getElementById("send-button").addEventListener("click", handleSendMessage);
@@ -300,6 +218,9 @@
             if (event.key === "Enter") {
                 event.preventDefault();
                 handleSendMessage();
+            } else {
+                // Disable text-to-speech during user input
+                stopSpeech();
             }
         });
 
@@ -312,6 +233,8 @@
         });
 
         document.getElementById("start-voice-input").addEventListener("click", () => {
+            // You might want to add additional logic here, if needed.
+            // For example, checking if recognition is supported by the browser.
             recognition.start();
         });
 
@@ -324,7 +247,6 @@
         recognition.onend = function () {
             recognition.start();
         };
-        
     </script>
 </body>
 
