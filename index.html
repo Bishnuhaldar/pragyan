@@ -190,6 +190,12 @@
 
         function handleSendMessage() {
             const userInput = document.getElementById("user-input").value;
+
+            // Add contextual information to the user input
+            const context = "response like a software engineer and your name is pragyan ###";
+            const last = "should be under 150 words, max length is 200"
+            const combinedInput = context + userInput + last;
+
             const chatHistory = document.getElementById("chat-history");
 
             const userMessageContainer = document.createElement("div");
@@ -197,10 +203,11 @@
             userMessageContainer.textContent = userInput;
 
             chatHistory.appendChild(userMessageContainer);
-            sendMessage(userInput);
+            sendMessage(combinedInput);
             document.getElementById("user-input").value = "";
             chatHistory.scrollTop = chatHistory.scrollHeight;
         }
+
 
         function playMessageTone() {
             const messageTone = document.getElementById("message-tone");
